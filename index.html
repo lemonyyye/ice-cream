@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;">
+    <title>雪糕选择器</title>
+    <style>
+      body{text-align: center;}
+      .uppop{
+        width: 412px;
+        display: grid;
+        grid-template-columns: repeat(4, 100px);
+        margin: 0 auto;
+        gap: 3px;
+        position: relative;
+        /* background-color: rgb(71, 181, 228); */
+      }
+      .son{
+        height: 120px;
+        border: 1px solid #000;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        font-size: 16px;
+        font-weight: bold;
+        background:#fff;
+        line-height: 100px;
+        transform: rotateY(0deg);
+      }
+      .son.active {
+        transform: rotateY(360deg);
+        transition: transform 0.7s;
+      }
+      .tip{
+        display: none;
+        line-height: 50px;
+        color: #d97474
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        let uppop = document.querySelector('.uppop')
+        let sons = document.querySelectorAll('.uppop .son')
+        let tip = document.querySelector('.tip span')
+        let timer
+        uppop.onclick = function (e) {
+          clearTimeout(timer)
+          sons.forEach((item) => {
+            item.classList.remove('active')
+            item.style.background = '#fff'
+            item.innerHTML = item.dataset.text
+          })
+          e.target.classList.add('active')
+          timer = setTimeout(() => {
+            e.target.innerHTML = ''
+            e.target.style.background = `url(${e.target.dataset.bg}) no-repeat center  center/ 100% 100%`
+            tip.parentElement.style.display = 'block'
+            tip.innerText = e.target.dataset.peiliao
+          }, 700)
+        }        
+      }
+    </script>
+</head>
+<body>
+    <!-- <h1>雪糕选择器</h1> -->
+    <h2>请选择你想吃的雪糕</h2>
+    <div class="uppop">
+      <div class="son" data-bg="imgs/香菜.jpg" data-text="绿色脆皮雪糕" data-peiliao="香菜">绿色脆皮雪糕</div>
+      <div class="son" data-bg="imgs/辣椒.jpg" data-text="红丝绒雪糕" data-peiliao="辣椒">红丝绒雪糕</div>
+      <div class="son" data-bg="imgs/枸杞.jpg" data-text="十全大补雪糕" data-peiliao="枸杞、银耳">十全大补雪糕</div>
+      <div class="son" data-bg="imgs/大蒜.png" data-text="宝藏白皮雪糕" data-peiliao="大蒜">宝藏白皮雪糕</div>
+    </div>
+    <div class="tip">
+      姐妹姐妹，吃<span style="font-weight: bold"></span>雪糕吗？
+    </div>
+</body>
+</html>
